@@ -1,0 +1,61 @@
+# Default configuration for COOPMamba training
+
+model:
+  name: 'coopmamba'
+  size: 'base'  # Options: tiny, small, base, large
+  img_size: 224
+  patch_size: 16
+  num_classes: 1000
+  use_coop: true
+  n_ctx: 16
+  class_token_position: 'end'
+
+data:
+  dataset: 'imagenet'
+  data_path: './data'
+  batch_size: 64
+  num_workers: 8
+  pin_memory: true
+
+training:
+  epochs: 100
+  warmup_epochs: 5
+  lr: 0.001
+  min_lr: 1.0e-6
+  weight_decay: 0.05
+  optimizer: 'adamw'
+  momentum: 0.9
+  
+  # Learning rate schedule
+  lr_scheduler: 'cosine'
+  
+  # Gradient clipping
+  clip_grad: 1.0
+  
+  # Mixed precision training
+  amp: true
+
+augmentation:
+  # Basic augmentation
+  auto_augment: 'rand-m9-mstd0.5-inc1'
+  reprob: 0.25
+  remode: 'pixel'
+  recount: 1
+  
+  # Mixup/Cutmix
+  mixup: 0.8
+  cutmix: 1.0
+  cutmix_minmax: null
+  mixup_prob: 1.0
+  mixup_switch_prob: 0.5
+  mixup_mode: 'batch'
+
+logging:
+  print_freq: 100
+  save_freq: 10
+  output_dir: './output'
+  log_dir: './logs'
+
+evaluation:
+  eval_freq: 1
+  start_eval: 0
