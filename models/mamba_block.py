@@ -4,12 +4,13 @@ Mamba Block Implementation for Vision Tasks
 
 import torch
 import torch.nn as nn
+import warnings
 from einops import rearrange
 
 try:
     from mamba_ssm import Mamba
 except ImportError:
-    print("Warning: mamba_ssm not installed. Using placeholder implementation.")
+    warnings.warn("mamba_ssm not installed. Using placeholder implementation.", ImportWarning)
     Mamba = None
 
 

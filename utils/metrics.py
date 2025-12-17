@@ -48,7 +48,7 @@ def accuracy(output, target, topk=(1,)):
         
         res = []
         for k in topk:
-            correct_k = correct[:k].reshape(-1).float().sum(0, keepdim=True)
+            correct_k = correct[:k].contiguous().view(-1).float().sum(0, keepdim=True)
             res.append(correct_k.mul_(100.0 / batch_size))
         
         return res
@@ -70,6 +70,6 @@ class ProgressMeter:
         print('\t'.join(entries))
     
     def _get_batch_fmtstr(self, num_batches):
-        num_digits = len(str(num_batches // 1))
+        num_digits = len(str(num_batches))
         fmt = '{:' + str(num_digits) + 'd}'
         return '[' + fmt + '/' + fmt.format(num_batches) + ']'
